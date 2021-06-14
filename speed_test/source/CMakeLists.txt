@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+set(Torch_DIR "${CMAKE_SOURCE_DIR}/../../../../../libtorch/share/cmake/Torch")
+project(squeeze_net_c++_jit_inference)
+#find_package(OpenCV REQUIRED)
+find_package(CUDA REQUIRED)
+find_package(Torch REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+add_executable(squeeze_net_c++_jit_inference script_jit.cxx)
+#add_executable(squeeze_net_c++_onnx_inference trace_onnx.cxx)
+target_link_libraries(squeeze_net_c++_jit_inference "${TORCH_LIBRARIES}")
+#target_link_libraries(squeeze_net_c++_onnx_inference "${OpenCV_LIBRARIES}")
+set_property(TARGET squeeze_net_c++_jit_inference PROPERTY CXX_STANDARD 14)
+#set_property(TARGET squeeze_net_c++_onnx_inference PROPERTY CXX_STANDARD 14)
